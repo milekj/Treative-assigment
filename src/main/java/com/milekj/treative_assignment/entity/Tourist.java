@@ -1,5 +1,7 @@
 package com.milekj.treative_assignment.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -19,10 +21,31 @@ public class Tourist {
     private LocalDate dateOfBirth;
 
     @ManyToMany
+    @JoinTable(name = "flight_tourist",
+            joinColumns = @JoinColumn(name = "tourist_id"),
+            inverseJoinColumns = @JoinColumn(name = "flight_id"),
+            uniqueConstraints = {
+                    @UniqueConstraint(columnNames = "flight_id"),
+                    @UniqueConstraint(columnNames = "tourist_id")
+            })
     private List<Flight> flights;
 
     public Tourist() {
         flights = Collections.emptyList();
+    }
+
+    public Tourist(String firstName,
+                   String lastName,
+                   Gender gender,
+                   String country,
+                   String notes,
+                   LocalDate dateOfBirth) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.country = country;
+        this.notes = notes;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public void addToFlights(Flight flight) {

@@ -1,5 +1,7 @@
 package com.milekj.treative_assignment.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,6 +17,8 @@ public class Flight {
     private LocalDateTime departureDateTime;
     private LocalDateTime arrivalDateTime;
     private int placesNumber;
+
+    @Column(precision = 2)
     private BigDecimal ticketPrice;
 
     @ManyToMany(mappedBy = "flights")
@@ -22,6 +26,16 @@ public class Flight {
 
     public Flight() {
         tourists = Collections.emptyList();
+    }
+
+    public Flight(LocalDateTime departureDateTime,
+                  LocalDateTime arrivalDateTime,
+                  int placesNumber,
+                  BigDecimal ticketPrice) {
+        this.departureDateTime = departureDateTime;
+        this.arrivalDateTime = arrivalDateTime;
+        this.placesNumber = placesNumber;
+        this.ticketPrice = ticketPrice;
     }
 
     public void addToTourists(Tourist tourist) {
