@@ -16,24 +16,6 @@ public class TouristDto {
     public TouristDto() {
     }
 
-    private TouristDto(String firstName,
-                       String lastName,
-                       Gender gender,
-                       String country,
-                       String notes,
-                       LocalDate dateOfBirth) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.country = country;
-        this.notes = notes;
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public static TouristDto.Builder builder() {
-        return new TouristDto.Builder();
-    }
-
     public Tourist toTourist() {
         Tourist tourist = new Tourist();
         tourist.setFirstName(firstName);
@@ -67,6 +49,24 @@ public class TouristDto {
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public static TouristDto.Builder builder() {
+        return new TouristDto.Builder();
+    }
+
+    private TouristDto(String firstName,
+                       String lastName,
+                       Gender gender,
+                       String country,
+                       String notes,
+                       LocalDate dateOfBirth) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.country = country;
+        this.notes = notes;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public static class Builder {

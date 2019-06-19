@@ -25,6 +25,17 @@ public class Tourist {
         flights = Collections.emptyList();
     }
 
+    public void addToFlights(Flight flight) {
+        flights.add(flight);
+        flight.getTourists().add(this);
+    }
+
+    public void removeFromFlights(Flight flight) {
+        flights.remove(flight);
+        flight.getTourists().add(this);
+        flight.getTourists().add(this);
+    }
+
     public long getId() {
         return id;
     }

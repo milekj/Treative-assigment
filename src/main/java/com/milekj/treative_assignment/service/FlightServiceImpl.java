@@ -1,10 +1,11 @@
 package com.milekj.treative_assignment.service;
 
+import com.milekj.treative_assignment.dto.FlightDto;
 import com.milekj.treative_assignment.dto.TouristDto;
 import com.milekj.treative_assignment.entity.Flight;
 import com.milekj.treative_assignment.entity.Tourist;
 import com.milekj.treative_assignment.exception.ResourceNotFoundException;
-import com.milekj.treative_assignment.repository.TouristRepository;
+import com.milekj.treative_assignment.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -14,32 +15,32 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-public class TouristServiceImpl implements TouristService {
-    private TouristRepository touristRepository;
+public class FlightServiceImpl implements FlightService {
+    private FlightRepository flightRepository;
 
     @Autowired
-    public TouristServiceImpl(TouristRepository touristRepository) {
-        this.touristRepository = touristRepository;
+    public FlightServiceImpl(FlightRepository flightRepository) {
+        this.flightRepository = flightRepository;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Tourist> getAll() {
-        return touristRepository.findAll();
+    public List<Flight> getAll() {
+        return flightRepository.findAll();
     }
 
     @Override
     @Transactional
-    public Tourist create(TouristDto touristDto) {
-        Tourist tourist = touristDto.toTourist();
-        return touristRepository.save(tourist);
+    public Flight create(FlightDto flightDto) {
+        Flight flight = flightDto.toFlight();
+        return flightRepository.save(flight);
     }
 
     @Override
     @Transactional
     public void deleteById(long id) throws ResourceNotFoundException {
         try {
-            touristRepository.deleteById(id);
+            flightRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException();
         }
@@ -47,15 +48,15 @@ public class TouristServiceImpl implements TouristService {
 
     @Override
     @Transactional
-    public void update(long id, TouristDto touristDto) throws ResourceNotFoundException {
+    public void update(long id, FlightDto flightDto) throws ResourceNotFoundException {
         try {
-            Tourist newTourist = touristDto.toTourist();
-            Tourist oldTourist = touristRepository.getOne(id);
-            long oldId = oldTourist.getId();
-            List<Flight> oldFlights = oldTourist.getFlights();
-            newTourist.setId(oldId);
-            newTourist.getFlights().addAll(oldFlights);
-            touristRepository.save(newTourist);
+            Flight newFlight = flightDto.toFlight();
+            Flight oldFlight = flightRepository.getOne(id);
+            long oldId = oldFlight.getId();
+            List<Tourist> oldTourists = oldFlight.getTourists();
+            newFlight.setId(oldId);
+            newFlight.getTourists().addAll(oldTourists);
+            flightRepository.save(newFlight);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException();
         }
