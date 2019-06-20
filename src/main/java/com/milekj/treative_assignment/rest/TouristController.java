@@ -2,7 +2,6 @@ package com.milekj.treative_assignment.rest;
 
 import com.milekj.treative_assignment.dto.TouristRequestDto;
 import com.milekj.treative_assignment.dto.TouristResponseDto;
-import com.milekj.treative_assignment.entity.Tourist;
 import com.milekj.treative_assignment.exception.ResourceNotFoundException;
 import com.milekj.treative_assignment.service.FlightService;
 import com.milekj.treative_assignment.service.TouristService;
@@ -11,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,7 +31,7 @@ public class TouristController {
     }
 
     @PostMapping("")
-    public TouristResponseDto create(@RequestBody TouristRequestDto touristRequestDto) {
+    public TouristResponseDto create(@RequestBody @Valid TouristRequestDto touristRequestDto) {
         return touristService.create(touristRequestDto);
     }
 
@@ -56,5 +56,10 @@ public class TouristController {
     @PostMapping("{touristId}/flights/{flightId}")
     public void addTourist(@PathVariable int touristId, @PathVariable int flightId) {
         ControllerUtils.addTouristToFlight(flightService, touristId, flightId);
+    }
+
+    @DeleteMapping("{touristId}/flights/{flightId}")
+    public void deleteTourist(@PathVariable int touristId, @PathVariable int flightId) {
+        ControllerUtils.removeTouristFromFlight(flightService, touristId, flightId);
     }
 }

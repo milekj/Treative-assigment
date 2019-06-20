@@ -73,7 +73,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public void addTourist(long flightId, long touristId) throws ResourceNotFoundException {
+    public void addTourist(long flightId, long touristId) throws ResourceNotFoundException, InvalidPlacesNumberException {
         Flight flight = getFlightByIdOrThrow(flightId);
         Tourist tourist = touristService.getTouristByIdOrThrow(touristId);
         int bookedPlacesNumber = flightRepository.getBookedPlacesNumber(flightId);
@@ -81,6 +81,16 @@ public class FlightServiceImpl implements FlightService {
         int freePlacesNumber = totalPlacesNumber - bookedPlacesNumber;
         if (freePlacesNumber > 0)
             flight.addToTourists(tourist);
+        else
+            throw new InvalidPlacesNumberException();
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public void deleteTourist(long flightId, long touristId) throws ResourceNotFoundException {
+        Flight flight = getFlightByIdOrThrow(flightId);
+        Tourist tourist = touristService.getTouristByIdOrThrow(touristId);
+        flight.removeFromTourists(tourist);
     }
 
     @Override

@@ -13,6 +13,7 @@ public interface FlightService {
     FlightResponseDto create(FlightRequestDto flightRequestDto);
     void deleteById(long id) throws ResourceNotFoundException;
     void update(long id, FlightRequestDto flightRequestDto) throws ResourceNotFoundException, InvalidPlacesNumberException;
-    void addTourist(long flightId, long touristId) throws ResourceNotFoundException;
+    void addTourist(long flightId, long touristId) throws ResourceNotFoundException, InvalidPlacesNumberException;
+    void deleteTourist(long flightId, long touristId) throws ResourceNotFoundException;
     Flight getFlightByIdOrThrow(long id) throws ResourceNotFoundException;
 }
