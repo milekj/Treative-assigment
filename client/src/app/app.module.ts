@@ -11,6 +11,7 @@ import { FlightEditComponent } from './flight-edit/flight-edit.component';
 import { TouristCreateComponent } from './tourist-create/tourist-create.component';
 import { TouristEditComponent } from './tourist-edit/tourist-edit.component';
 import { TouristListComponent } from './tourist-list/tourist-list.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TouristListComponent } from './tourist-list/tourist-list.component';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatRippleModule
+    MatRippleModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

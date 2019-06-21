@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TouristService} from "../services/tourist.service";
 
 @Component({
   selector: 'app-tourist-list',
@@ -7,9 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TouristListComponent implements OnInit {
   Tourists: any = [];
-  constructor() { }
+  constructor(private touristService: TouristService) { }
 
   ngOnInit() {
+    this.loadTourists()
+  }
+
+  loadTourists() {
+    return this.touristService.getAll()
+      .subscribe((data: {}) => {
+        this.Tourists = data;
+      })
+  }
+
+  deleteTourist(id) {
+    if (window.confirm("Are you sure you want to delete the tourist with id " + id)) {
+      this.touristService.delete(id).subscribe((data: {}) => {
+        this.loadTourists()
+      })
+    }
   }
 
 }

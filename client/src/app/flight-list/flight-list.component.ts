@@ -22,7 +22,7 @@ export class FlightListComponent implements OnInit {
   }
 
   deleteFlight(id) {
-    if (window.confirm("Are you sure you want to delete flight with id" + id)) {
+    if (window.confirm("Are you sure you want to delete flight with id " + id)) {
       this.flightService.delete(id).subscribe((data: {}) => {
         this.loadFlights()
       })

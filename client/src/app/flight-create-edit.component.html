@@ -9,23 +9,27 @@
       </ng-template>
     </h3>
     <div class="form-group">
+      Departure date and time
       <input type="datetime-local" [(ngModel)]="flight.departureDateTime" class="form-control" placeholder="Departure time">
     </div>
     <div class="form-group">
+      Arrival date and time
       <input type="datetime-local" [(ngModel)]="flight.arrivalDateTime" class="form-control" placeholder="Arrival time">
     </div>
     <div class="form-group">
+      Ticket price
       <input type="number" [(ngModel)]="flight.ticketPrice" class="form-control" placeholder="Ticket price">
     </div>
     <div class="form-group">
+      Places number
       <input type="number" [(ngModel)]="flight.placesNumber" class="form-control" placeholder="Places number">
     </div>
       <div *ngIf="isCreated; else buttonEdit" class="form-group">
-        <button class="btn btn-success btn-lg btn-block" (click)="createFlight()">Create flight</button>
+        <button class="btn btn-success btn-lg btn-block" (click)="createFlight()">Create</button>
       </div>
     <ng-template #buttonEdit>
     <div class="form-group">
-      <button class="btn btn-success btn-lg btn-block" (click)="editFlight()">Edit flight</button>
+      <button class="btn btn-success btn-lg btn-block" (click)="editFlight()">Edit</button>
     </div>
     </ng-template>
   </div>

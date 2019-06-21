@@ -21,18 +21,18 @@ export class FlightService {
       .pipe()
   }
 
-  create(flightRequest): Observable<FlightResponse> {
-    return this.httpClient.post<FlightResponse>(`${this.apiURL}`, flightRequest)
+  create(flight): Observable<FlightResponse> {
+    return this.httpClient.post<FlightResponse>(`${this.apiURL}`, flight)
       .pipe()
   }
 
-  update(id, flightRequest): Observable<{}> {
-    return this.httpClient.put(`${this.apiURL}/${id}`, flightRequest)
+  update(id, flight): Observable<{}> {
+    return this.httpClient.put(`${this.apiURL}/${id}`, flight)
       .pipe()
   }
 
   delete(id): Observable<{}> {
-    return this.httpClient.delete(`${this.apiURL}${id}`)
+    return this.httpClient.delete(`${this.apiURL}/${id}`)
       .pipe()
   }
 }

@@ -1,0 +1,47 @@
+<div class="container custom-container">
+  <div class="col-md-12">
+    <h3 class="mb-3 text-center">
+      <span *ngIf="isCreated; else headerEdit">
+          Create tourist
+      </span>
+      <ng-template #headerEdit>
+        <span >Edit tourist</span>
+      </ng-template>
+    </h3>
+    <div class="form-group">
+      First name
+      <input type="text" [(ngModel)]="tourist.firstName" class="form-control">
+    </div>
+    <div class="form-group">
+      Last name
+      <input type="text" [(ngModel)]="tourist.lastName" class="form-control">
+    </div>
+    <div class="form-group">
+      Gender<br>
+        <input type="radio" [(ngModel)]="tourist.gender" value="FEMALE">
+        <label>Female</label><br>
+        <input type="radio" [(ngModel)]="tourist.gender" value="MALE">
+        <label>Male</label>
+    </div>
+    <div class="form-group">
+      Country
+      <input type="text" [(ngModel)]="tourist.country" class="form-control">
+    </div>
+    <div class="form-group">
+      Date of birth
+      <input type="date" [(ngModel)]="tourist.dateOfBirth" class="form-control">
+    </div>
+    <div class="form-group">
+      Notes
+      <textarea type="text" [(ngModel)]="tourist.notes" class="form-control"></textarea>
+    </div>
+      <div *ngIf="isCreated; else buttonEdit" class="form-group">
+        <button class="btn btn-success btn-lg btn-block" (click)="createTourist()">Create</button>
+      </div>
+    <ng-template #buttonEdit>
+    <div class="form-group">
+      <button class="btn btn-success btn-lg btn-block" (click)="editTourist()">Edit</button>
+    </div>
+    </ng-template>
+  </div>
+</div>

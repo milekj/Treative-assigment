@@ -1,39 +1,38 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from  '@angular/common/http';
 import {Observable} from "rxjs";
-import {FlightResponse} from "../model/flight-response";
 import {TouristResponse} from "../model/tourist-response";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TouristService {
-  apiURL = 'http://localhost:8080/api';
+  apiURL = 'http://localhost:8080/api/tourists';
 
   constructor(public httpClient:  HttpClient) { }
 
   getAll(): Observable<TouristResponse> {
-    return this.httpClient.get<TouristResponse>(`${this.apiURL}/tourists`)
+    return this.httpClient.get<TouristResponse>(`${this.apiURL}`)
       .pipe()
   }
 
   getById(id: number): Observable<TouristResponse> {
-    return this.httpClient.get<TouristResponse>(`${this.apiURL}/tourists/${id}`)
+    return this.httpClient.get<TouristResponse>(`${this.apiURL}/${id}`)
       .pipe()
   }
 
-  create(touristRequest): Observable<TouristResponse> {
-    return this.httpClient.post<TouristResponse>(`${this.apiURL}/tourists`, touristRequest)
+  create(tourist): Observable<TouristResponse> {
+    return this.httpClient.post<TouristResponse>(`${this.apiURL}`, tourist)
       .pipe()
   }
 
-  update(id, touristRequest): Observable<{}> {
-    return this.httpClient.put(`${this.apiURL}/tourists/${id}`, touristRequest)
+  update(id, tourist): Observable<{}> {
+    return this.httpClient.put(`${this.apiURL}/${id}`, tourist)
       .pipe()
   }
 
   delete(id): Observable<{}> {
-    return this.httpClient.delete(`${this.apiURL}/flights/${id}`)
+    return this.httpClient.delete(`${this.apiURL}/${id}`)
       .pipe()
   }
 }
