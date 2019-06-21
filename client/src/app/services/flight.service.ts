@@ -8,7 +8,7 @@ import {TouristResponse} from "../model/tourist-response";
   providedIn: 'root'
 })
 export class FlightService {
-  apiURL = 'http://localhost:8080/api/flights';
+  apiURL = 'https://flights-and-tourists.herokuapp.com/api/flights';
 
   constructor(public httpClient:  HttpClient) { }
 
