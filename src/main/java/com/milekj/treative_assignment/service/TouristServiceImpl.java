@@ -33,6 +33,12 @@ public class TouristServiceImpl implements TouristService {
     }
 
     @Override
+    public TouristResponseDto getDtoById(long id) throws ResourceNotFoundException {
+        Tourist tourist = getById(id);
+        return new TouristResponseDto(tourist);
+    }
+
+    @Override
     @Transactional
     public TouristResponseDto create(TouristRequestDto touristRequestDto) {
         Tourist tourist = touristRequestDto.toTourist();
@@ -54,7 +60,7 @@ public class TouristServiceImpl implements TouristService {
     @Transactional
     public void update(long id, TouristRequestDto touristRequestDto) throws ResourceNotFoundException {
             Tourist newTourist = touristRequestDto.toTourist();
-            Tourist oldTourist = getTouristByIdOrThrow(id);
+            Tourist oldTourist = getById(id);
             long oldId = oldTourist.getId();
             List<Flight> oldFlights = oldTourist.getFlights();
             newTourist.setId(oldId);
@@ -64,7 +70,7 @@ public class TouristServiceImpl implements TouristService {
 
     @Override
     @Transactional(readOnly = true)
-    public Tourist getTouristByIdOrThrow(long id) throws ResourceNotFoundException {
+    public Tourist getById(long id) throws ResourceNotFoundException {
         return touristRepository.findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
     }

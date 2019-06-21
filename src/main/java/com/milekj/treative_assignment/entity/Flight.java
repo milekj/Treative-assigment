@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -25,13 +26,14 @@ public class Flight {
     private List<Tourist> tourists;
 
     public Flight() {
-        tourists = Collections.emptyList();
+        tourists = new LinkedList<>();
     }
 
     public Flight(LocalDateTime departureDateTime,
                   LocalDateTime arrivalDateTime,
                   int placesNumber,
                   BigDecimal ticketPrice) {
+        this();
         this.departureDateTime = departureDateTime;
         this.arrivalDateTime = arrivalDateTime;
         this.placesNumber = placesNumber;

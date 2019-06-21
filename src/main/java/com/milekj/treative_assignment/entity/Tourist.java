@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -31,7 +32,7 @@ public class Tourist {
     private List<Flight> flights;
 
     public Tourist() {
-        flights = Collections.emptyList();
+        flights = new LinkedList<>();
     }
 
     public Tourist(String firstName,
@@ -40,6 +41,7 @@ public class Tourist {
                    String country,
                    String notes,
                    LocalDate dateOfBirth) {
+        this();
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;

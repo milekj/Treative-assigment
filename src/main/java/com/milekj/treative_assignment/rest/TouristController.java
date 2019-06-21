@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tourists")
+@CrossOrigin
 public class TouristController {
     private TouristService touristService;
     private FlightService flightService;
@@ -28,6 +29,15 @@ public class TouristController {
     @GetMapping("")
     public List<TouristResponseDto> getAll() {
         return touristService.getAll();
+    }
+
+    @GetMapping("{id}")
+    public TouristResponseDto getAll(@PathVariable long id) {
+        try {
+            return touristService.getDtoById(id);
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("")

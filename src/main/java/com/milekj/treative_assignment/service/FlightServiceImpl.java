@@ -37,6 +37,12 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public FlightResponseDto getById(long id) throws ResourceNotFoundException {
+        Flight flight = getFlightById(id);
+        return new FlightResponseDto(flight);
+    }
+
+    @Override
     @Transactional
     public FlightResponseDto create(FlightRequestDto flightRequestDto) {
         Flight flight = flightRequestDto.toFlight();
@@ -67,6 +73,8 @@ public class FlightServiceImpl implements FlightService {
                 throw new InvalidPlacesNumberException();
             List<Tourist> oldTourists = oldFlight.getTourists();
             newFlight.setId(oldId);
+            System.out.println(newFlight.getTourists());
+            System.out.println(oldFlight.getTourists());
             newFlight.getTourists().addAll(oldTourists);
             flightRepository.save(newFlight);
     }
@@ -74,8 +82,8 @@ public class FlightServiceImpl implements FlightService {
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void addTourist(long flightId, long touristId) throws ResourceNotFoundException, InvalidPlacesNumberException {
-        Flight flight = getFlightByIdOrThrow(flightId);
-        Tourist tourist = touristService.getTouristByIdOrThrow(touristId);
+        Flight flight = getFlightById(flightId);
+        Tourist tourist = touristService.getById(touristId);
         int bookedPlacesNumber = flightRepository.getBookedPlacesNumber(flightId);
         int totalPlacesNumber = flight.getPlacesNumber();
         int freePlacesNumber = totalPlacesNumber - bookedPlacesNumber;
@@ -88,14 +96,13 @@ public class FlightServiceImpl implements FlightService {
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void deleteTourist(long flightId, long touristId) throws ResourceNotFoundException {
-        Flight flight = getFlightByIdOrThrow(flightId);
-        Tourist tourist = touristService.getTouristByIdOrThrow(touristId);
+        Flight flight = getFlightById(flightId);
+        Tourist tourist = touristService.getById(touristId);
         flight.removeFromTourists(tourist);
     }
 
-    @Override
     @Transactional(readOnly = true)
-    public Flight getFlightByIdOrThrow(long id) throws ResourceNotFoundException {
+    public Flight getFlightById(long id) throws ResourceNotFoundException {
         return flightRepository.findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
     }
