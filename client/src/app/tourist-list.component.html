@@ -1,0 +1,59 @@
+<div class="col-md-12">
+  <div class="container custom-container-2">
+    <h3 [ngSwitch]='mode' class="mb-3 text-center">
+      <span *ngSwitchCase="'plain'">Tourist list</span>
+      <span *ngSwitchCase="'flight'">Tourists for flight of id {{id}}</span>
+      <span *ngSwitchCase="'flight-add'">Choose tourist to add for the flight of id {{id}}</span>
+    </h3>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">First name</th>
+        <th scope="col">Last name</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Country</th>
+        <th scope="col">Date of birth</th>
+        <th scope="col">Notes</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let tourist of Tourists">
+        <td>{{tourist.id}}</td>
+        <td>{{tourist.firstName}}</td>
+        <td>{{tourist.lastName}}</td>
+        <td>{{tourist.gender}}</td>
+        <td>{{tourist.country}}</td>
+        <td>{{tourist.dateOfBirth}}</td>
+        <td>{{tourist.notes}}</td>
+        <td [ngSwitch]="mode">
+          <span *ngSwitchCase="'plain'">
+            <a routerLink="/edit-tourist/{{tourist.id}}">
+            <button type="button" class="btn btn-primary mr-1">Edit</button>
+            </a>
+            <a routerLink="/tourist-flights/{{tourist.id}}">
+            <button type="button" class="btn btn-primary mr-1">Manage flights</button>
+            </a>
+            <button type="button" class="btn btn-danger mr-1" (click)="deleteTourist(tourist.id)">Delete</button>
+          </span>
+
+          <span *ngSwitchCase="'flight'">
+            <button type="button" class="btn btn-danger mr-1" (click)="deleteFlightTourist(tourist.id)">Delete from flight</button>
+          </span>
+
+          <span *ngSwitchCase="'flight-add'">
+            <button type="button" class="btn btn-primary mr-1" (click)="addFlightTourist(tourist.id)">Add to flight</button>
+          </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div [ngSwitch]="mode">
+        <span *ngSwitchCase="'flight'">
+            <a routerLink="/add-flight-tourist/{{id}}">
+            <button type="button" class="btn btn-primary mr-1">Add tourist</button>
+            </a>
+          </span>
+    </div>
+  </div>
+</div>

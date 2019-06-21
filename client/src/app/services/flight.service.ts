@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from  '@angular/common/http';
 import {Observable} from "rxjs";
 import {FlightResponse} from "../model/flight-response";
+import {TouristResponse} from "../model/tourist-response";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,11 @@ export class FlightService {
 
   getById(id: number): Observable<FlightResponse> {
     return this.httpClient.get<FlightResponse>(`${this.apiURL}/${id}`)
+      .pipe()
+  }
+
+  getTourists(id: number): Observable<TouristResponse> {
+    return this.httpClient.get<TouristResponse>(`${this.apiURL}/${id}/tourists`)
       .pipe()
   }
 

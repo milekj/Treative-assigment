@@ -3,10 +3,11 @@ import {TouristService} from "../services/tourist.service";
 
 @Component({
   selector: 'app-tourist-list',
-  templateUrl: './tourist-list.component.html',
+  templateUrl: '../tourist-list.component.html',
   styleUrls: ['./tourist-list.component.css']
 })
 export class TouristListComponent implements OnInit {
+  @Input() mode = 'plain';
   Tourists: any = [];
   constructor(private touristService: TouristService) { }
 

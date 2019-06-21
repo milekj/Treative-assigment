@@ -19,7 +19,7 @@ public class Flight {
     private LocalDateTime arrivalDateTime;
     private int placesNumber;
 
-    @Column(precision = 2)
+    @Column(scale = 2)
     private BigDecimal ticketPrice;
 
     @ManyToMany(mappedBy = "flights")

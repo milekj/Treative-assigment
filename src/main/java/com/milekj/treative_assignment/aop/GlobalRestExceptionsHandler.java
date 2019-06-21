@@ -22,6 +22,17 @@ public class GlobalRestExceptionsHandler extends ResponseEntityExceptionHandler 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
+                                                             Object body,
+                                                             HttpHeaders headers,
+                                                             HttpStatus status,
+                                                             WebRequest request) {
+        JsonErrorResponse errorResponse = new JsonErrorResponse(HttpStatus.BAD_REQUEST.value(),
+                "An unknown error occurred. Please check if your request is valid");
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
     private class JsonErrorResponse {
         private final LocalDateTime timestamp;
         private final int status;

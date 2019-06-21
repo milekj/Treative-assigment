@@ -14,6 +14,8 @@ import { TouristListComponent } from './tourist-list/tourist-list.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { TouristFlightsListComponent } from './tourist-flights-list/tourist-flights-list.component';
 import { TouristFlightAddComponent } from './tourist-flight-add/tourist-flight-add.component';
+import { FlightTouristsListComponent } from './flight-tourists-list/flight-tourists-list.component';
+import { FlightTouristAddComponent } from './flight-tourist-add/flight-tourist-add.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { TouristFlightAddComponent } from './tourist-flight-add/tourist-flight-a
     TouristListComponent,
     TouristFlightsListComponent,
     TouristFlightAddComponent,
+    FlightTouristsListComponent,
+    FlightTouristAddComponent,
   ],
   imports: [
     BrowserModule,

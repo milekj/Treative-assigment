@@ -2,9 +2,11 @@ package com.milekj.treative_assignment.rest;
 
 import com.milekj.treative_assignment.dto.FlightRequestDto;
 import com.milekj.treative_assignment.dto.FlightResponseDto;
+import com.milekj.treative_assignment.dto.TouristResponseDto;
 import com.milekj.treative_assignment.exception.InvalidPlacesNumberException;
 import com.milekj.treative_assignment.exception.ResourceNotFoundException;
 import com.milekj.treative_assignment.service.FlightService;
+import com.milekj.treative_assignment.service.TouristService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +19,12 @@ import java.util.List;
 @CrossOrigin
 public class FlightController {
     private FlightService flightService;
+    private TouristService touristService;
 
     @Autowired
-    public FlightController(FlightService flightService) {
+    public FlightController(FlightService flightService, TouristService touristService) {
         this.flightService = flightService;
+        this.touristService = touristService;
     }
 
     @GetMapping("")
@@ -31,7 +35,16 @@ public class FlightController {
     @GetMapping("{id}")
     public FlightResponseDto getAll(@PathVariable long id) {
         try {
-            return flightService.getById(id);
+            return flightService.getDtoById(id);
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("{id}/tourists")
+    public List<TouristResponseDto> getTourists(@PathVariable long id) {
+        try {
+            return touristService.getByFlightId(id);
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

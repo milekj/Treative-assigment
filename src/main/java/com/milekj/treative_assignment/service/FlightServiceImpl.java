@@ -22,10 +22,10 @@ public class FlightServiceImpl implements FlightService {
     private TouristService touristService;
 
     @Autowired
-    public FlightServiceImpl(FlightRepository flightRepository, TouristService touristService) {
+    public FlightServiceImpl(FlightRepository flightRepository) {
         this.flightRepository = flightRepository;
-        this.touristService = touristService;
     }
+    //TouristService injected by setter to avoid circular dependency
 
     @Override
     @Transactional(readOnly = true)
@@ -35,8 +35,15 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public FlightResponseDto getById(long id) throws ResourceNotFoundException {
-        Flight flight = getFlightById(id);
+    @Transactional(readOnly = true)
+    public Flight getById(long id) throws ResourceNotFoundException {
+        return flightRepository.findById(id)
+                .orElseThrow(ResourceNotFoundException::new);
+    }
+
+    @Override
+    public FlightResponseDto getDtoById(long id) throws ResourceNotFoundException {
+        Flight flight = getById(id);
         return new FlightResponseDto(flight);
     }
 
@@ -87,7 +94,7 @@ public class FlightServiceImpl implements FlightService {
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void addTourist(long flightId, long touristId) throws ResourceNotFoundException, InvalidPlacesNumberException {
-        Flight flight = getFlightById(flightId);
+        Flight flight = getById(flightId);
         Tourist tourist = touristService.getById(touristId);
         int bookedPlacesNumber = flightRepository.getBookedPlacesNumber(flightId);
         int totalPlacesNumber = flight.getPlacesNumber();
@@ -101,20 +108,19 @@ public class FlightServiceImpl implements FlightService {
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void deleteTourist(long flightId, long touristId) throws ResourceNotFoundException {
-        Flight flight = getFlightById(flightId);
+        Flight flight = getById(flightId);
         Tourist tourist = touristService.getById(touristId);
         flight.removeFromTourists(tourist);
-    }
-
-    @Transactional(readOnly = true)
-    public Flight getFlightById(long id) throws ResourceNotFoundException {
-        return flightRepository.findById(id)
-                .orElseThrow(ResourceNotFoundException::new);
     }
 
     private List<FlightResponseDto> toFlightResponse(List<Flight> flights) {
         return flights.stream()
                 .map(FlightResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Autowired
+    public void setTouristService(TouristService touristService) {
+        this.touristService = touristService;
     }
 }

@@ -14,6 +14,7 @@ public class ControllerUtils {
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.CONFLICT, "The tourist is already signed for the flight");
         } catch (InvalidPlacesNumberException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "There are no places left for the flight");

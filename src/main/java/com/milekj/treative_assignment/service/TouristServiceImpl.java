@@ -17,25 +17,33 @@ import java.util.stream.Collectors;
 @Service
 public class TouristServiceImpl implements TouristService {
     private TouristRepository touristRepository;
+    private FlightService flightService;
 
     @Autowired
     public TouristServiceImpl(TouristRepository touristRepository) {
         this.touristRepository = touristRepository;
     }
+    //FlightService injected by setter to avoid circular dependency
 
     @Override
     @Transactional(readOnly = true)
     public List<TouristResponseDto> getAll() {
-        return touristRepository.findAll()
-                .stream()
-                .map(TouristResponseDto::new)
-                .collect(Collectors.toList());
+        List<Tourist> tourists = touristRepository.findAll();
+        return toTouristResponseDto(tourists);
     }
+
 
     @Override
     public TouristResponseDto getDtoById(long id) throws ResourceNotFoundException {
         Tourist tourist = getById(id);
         return new TouristResponseDto(tourist);
+    }
+
+    @Override
+    public List<TouristResponseDto> getByFlightId(long id) throws ResourceNotFoundException {
+        Flight flight = flightService.getById(id);
+        List<Tourist> tourists = flight.getTourists();
+        return toTouristResponseDto(tourists);
     }
 
     @Override
@@ -73,5 +81,16 @@ public class TouristServiceImpl implements TouristService {
     public Tourist getById(long id) throws ResourceNotFoundException {
         return touristRepository.findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
+    }
+
+    private List<TouristResponseDto> toTouristResponseDto(List<Tourist> tourists) {
+        return tourists.stream()
+                .map(TouristResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Autowired
+    public void setFlightService(FlightService flightService) {
+        this.flightService = flightService;
     }
 }

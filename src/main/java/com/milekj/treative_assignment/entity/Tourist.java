@@ -25,10 +25,7 @@ public class Tourist {
     @JoinTable(name = "flight_tourist",
             joinColumns = @JoinColumn(name = "tourist_id"),
             inverseJoinColumns = @JoinColumn(name = "flight_id"),
-            uniqueConstraints = {
-                    @UniqueConstraint(columnNames = "flight_id"),
-                    @UniqueConstraint(columnNames = "tourist_id")
-            })
+            uniqueConstraints = { @UniqueConstraint(columnNames = {"flight_id", "tourist_id"})})
     private List<Flight> flights;
 
     public Tourist() {

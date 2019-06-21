@@ -11,6 +11,7 @@ public interface TouristService {
     List<TouristResponseDto> getAll();
     Tourist getById(long id) throws ResourceNotFoundException;
     TouristResponseDto getDtoById(long id) throws ResourceNotFoundException;
+    List<TouristResponseDto> getByFlightId(long id) throws ResourceNotFoundException;
     TouristResponseDto create(TouristRequestDto touristRequestDto);
     void deleteById(long id) throws ResourceNotFoundException;
     void update(long id, TouristRequestDto touristRequestDto) throws ResourceNotFoundException;

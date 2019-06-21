@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FlightService} from "../services/flight.service";
 import {TouristService} from "../services/tourist.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
