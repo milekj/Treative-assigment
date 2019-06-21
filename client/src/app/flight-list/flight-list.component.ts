@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { FlightService } from "../services/flight.service";
 
 @Component({
   selector: 'app-flight-list',
-  templateUrl: './flight-list.component.html',
+  templateUrl: '../flight-list.component.html',
   styleUrls: ['./flight-list.component.css']
 })
 export class FlightListComponent implements OnInit {
+  @Input() mode = 'plain';
   Flights: any = [];
   constructor(private flightService: FlightService) { }
 

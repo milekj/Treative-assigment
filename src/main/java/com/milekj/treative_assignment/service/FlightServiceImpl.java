@@ -30,16 +30,21 @@ public class FlightServiceImpl implements FlightService {
     @Override
     @Transactional(readOnly = true)
     public List<FlightResponseDto> getAll() {
-        return flightRepository.findAll()
-                .stream()
-                .map(FlightResponseDto::new)
-                .collect(Collectors.toList());
+        List<Flight> flights = flightRepository.findAll();
+        return toFlightResponse(flights);
     }
 
     @Override
     public FlightResponseDto getById(long id) throws ResourceNotFoundException {
         Flight flight = getFlightById(id);
         return new FlightResponseDto(flight);
+    }
+
+    @Override
+    public List<FlightResponseDto> getByTouristId(long id) throws ResourceNotFoundException {
+        Tourist tourist = touristService.getById(id);
+        List<Flight> flights = tourist.getFlights();
+        return toFlightResponse(flights);
     }
 
     @Override
@@ -105,5 +110,11 @@ public class FlightServiceImpl implements FlightService {
     public Flight getFlightById(long id) throws ResourceNotFoundException {
         return flightRepository.findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
+    }
+
+    private List<FlightResponseDto> toFlightResponse(List<Flight> flights) {
+        return flights.stream()
+                .map(FlightResponseDto::new)
+                .collect(Collectors.toList());
     }
 }

@@ -1,0 +1,52 @@
+<div class="col-md-12">
+    <div class="container custom-container-2">
+      <h3 [ngSwitch]='mode' class="mb-3 text-center">
+        <span *ngSwitchCase="'plain'">Flights list</span>
+        <span *ngSwitchCase="'tourist'">Flights for tourist of id {{id}}</span>
+        <span *ngSwitchCase="'tourist-add'">Choose flight to add for tourist of id {{id}}</span>
+      </h3>
+      <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Departure date</th>
+          <th scope="col">Arrival</th>
+          <th scope="col">Ticket price</th>
+          <th scope="col">Places number</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let flight of Flights">
+        <td>{{flight.id}}</td>
+        <td>{{ flight.departureDateTime | date: 'MM/dd/yyyy hh:mm'}}</td>
+        <td>{{ flight.arrivalDateTime | date: 'MM/dd/yyyy hh:mm'}}</td>
+        <td>{{flight.ticketPrice}}</td>
+        <td>{{flight.placesNumber}}</td>
+        <td [ngSwitch]="mode">
+          <span *ngSwitchCase="'plain'">
+            <a routerLink="/edit-flight/{{flight.id}}">
+            <button type="button" class="btn btn-primary mr-1">Edit</button>
+            </a>
+            <button type="button" class="btn btn-danger mr-1" (click)="deleteFlight(flight.id)">Delete</button>
+          </span>
+
+          <span *ngSwitchCase="'tourist'">
+            <button type="button" class="btn btn-danger mr-1" (click)="deleteTouristFlight(flight.id)">Delete from tourist</button>
+          </span>
+
+          <span *ngSwitchCase="'tourist-add'">
+            <button type="button" class="btn btn-primary mr-1" (click)="addTouristFlight(flight.id)">Add to tourist</button>
+          </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+      <div [ngSwitch]="mode">
+        <span *ngSwitchCase="'tourist'">
+            <a routerLink="/add-tourist-flight/{{id}}">
+            <button type="button" class="btn btn-primary mr-1">Add flight</button>
+            </a>
+          </span>
+      </div>
+  </div>
+</div>

@@ -24,9 +24,12 @@
         <td>{{tourist.notes}}</td>
         <td>
           <a routerLink="/edit-tourist/{{tourist.id}}">
-            <button type="button" class="btn btn-primary">Edit</button>
+            <button type="button" class="btn btn-primary mr-1">Edit</button>
           </a>
-          <button type="button" class="btn btn-danger" (click)="deleteTourist(tourist.id)">Delete</button>
+          <a routerLink="/tourist-flights/{{tourist.id}}">
+            <button type="button" class="btn btn-primary mr-1">Manage flights</button>
+          </a>
+          <button type="button" class="btn btn-danger mr-1" (click)="deleteTourist(tourist.id)">Delete</button>
         </td>
       </tr>
       </tbody>

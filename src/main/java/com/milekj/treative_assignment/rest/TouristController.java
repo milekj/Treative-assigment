@@ -1,5 +1,6 @@
 package com.milekj.treative_assignment.rest;
 
+import com.milekj.treative_assignment.dto.FlightResponseDto;
 import com.milekj.treative_assignment.dto.TouristRequestDto;
 import com.milekj.treative_assignment.dto.TouristResponseDto;
 import com.milekj.treative_assignment.exception.ResourceNotFoundException;
@@ -35,6 +36,15 @@ public class TouristController {
     public TouristResponseDto getAll(@PathVariable long id) {
         try {
             return touristService.getDtoById(id);
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("{id}/flights")
+    public List<FlightResponseDto> getTouristFlights(@PathVariable long id) {
+        try {
+            return flightService.getByTouristId(id);
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

@@ -35,4 +35,9 @@ export class FlightService {
     return this.httpClient.delete(`${this.apiURL}/${id}`)
       .pipe()
   }
+
+  addToTourist(flightId, touristId): Observable<{}> {
+    return this.httpClient.post(`${this.apiURL}/${flightId}/tourists/${touristId}`, null)
+      .pipe()
+  }
 }

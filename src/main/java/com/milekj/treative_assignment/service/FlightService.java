@@ -10,6 +10,7 @@ import java.util.List;
 public interface FlightService {
     List<FlightResponseDto> getAll();
     FlightResponseDto getById(long id) throws ResourceNotFoundException;
+    List<FlightResponseDto> getByTouristId(long id) throws ResourceNotFoundException;
     FlightResponseDto create(FlightRequestDto flightRequestDto);
     void deleteById(long id) throws ResourceNotFoundException;
     void update(long id, FlightRequestDto flightRequestDto) throws ResourceNotFoundException, InvalidPlacesNumberException;
