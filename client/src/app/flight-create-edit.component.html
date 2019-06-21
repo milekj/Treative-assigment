@@ -1,0 +1,32 @@
+<div class="container custom-container">
+  <div class="col-md-12">
+    <h3 class="mb-3 text-center">
+      <span *ngIf="isCreated; else headerEdit">
+          Create flight
+      </span>
+      <ng-template #headerEdit>
+        <span >Edit flight</span>
+      </ng-template>
+    </h3>
+    <div class="form-group">
+      <input type="datetime-local" [(ngModel)]="flight.departureDateTime" class="form-control" placeholder="Departure time">
+    </div>
+    <div class="form-group">
+      <input type="datetime-local" [(ngModel)]="flight.arrivalDateTime" class="form-control" placeholder="Arrival time">
+    </div>
+    <div class="form-group">
+      <input type="number" [(ngModel)]="flight.ticketPrice" class="form-control" placeholder="Ticket price">
+    </div>
+    <div class="form-group">
+      <input type="number" [(ngModel)]="flight.placesNumber" class="form-control" placeholder="Places number">
+    </div>
+      <div *ngIf="isCreated; else buttonEdit" class="form-group">
+        <button class="btn btn-success btn-lg btn-block" (click)="createFlight()">Create flight</button>
+      </div>
+    <ng-template #buttonEdit>
+    <div class="form-group">
+      <button class="btn btn-success btn-lg btn-block" (click)="editFlight()">Edit flight</button>
+    </div>
+    </ng-template>
+  </div>
+</div>
