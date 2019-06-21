@@ -8,40 +8,67 @@
         <span >Edit tourist</span>
       </ng-template>
     </h3>
-    <div class="form-group">
-      First name
-      <input type="text" [(ngModel)]="tourist.firstName" class="form-control">
-    </div>
-    <div class="form-group">
-      Last name
-      <input type="text" [(ngModel)]="tourist.lastName" class="form-control">
-    </div>
-    <div class="form-group">
-      Gender<br>
-        <input type="radio" [(ngModel)]="tourist.gender" value="FEMALE">
-        <label>Female</label><br>
-        <input type="radio" [(ngModel)]="tourist.gender" value="MALE">
-        <label>Male</label>
-    </div>
-    <div class="form-group">
-      Country
-      <input type="text" [(ngModel)]="tourist.country" class="form-control">
-    </div>
-    <div class="form-group">
-      Date of birth
-      <input type="date" [(ngModel)]="tourist.dateOfBirth" class="form-control">
-    </div>
-    <div class="form-group">
-      Notes
-      <textarea type="text" [(ngModel)]="tourist.notes" class="form-control"></textarea>
-    </div>
-      <div *ngIf="isCreated; else buttonEdit" class="form-group">
-        <button class="btn btn-success btn-lg btn-block" (click)="createTourist()">Create</button>
+    <form #touristForm="ngForm">
+      <div class="form-group">
+        First name
+        <input type="text" [(ngModel)]="tourist.firstName" required name="firstName" class="form-control" #firstName="ngModel">
+        <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+             class="alert alert-danger">
+          <div *ngIf="firstName.errors.required">
+            First name is required.
+          </div>
+        </div>
       </div>
-    <ng-template #buttonEdit>
-    <div class="form-group">
-      <button class="btn btn-success btn-lg btn-block" (click)="editTourist()">Edit</button>
-    </div>
-    </ng-template>
+      <div class="form-group">
+        Last name
+        <input type="text" [(ngModel)]="tourist.lastName" required name="lastName" class="form-control" #lastName="ngModel">
+        <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+             class="alert alert-danger">
+          <div *ngIf="lastName.errors.required">
+            Last name is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        Gender<br>
+          <input type="radio" [(ngModel)]="tourist.gender" name="gender" value="FEMALE">
+          <label>Female</label><br>
+          <input type="radio" [(ngModel)]="tourist.gender" name="gender" value="MALE">
+          <label>Male</label>
+      </div>
+      <div class="form-group">
+        Country
+        <input type="text" [(ngModel)]="tourist.country" required name="country" class="form-control" #country="ngModel">
+        <div *ngIf="country.invalid && (country.dirty || country.touched)"
+             class="alert alert-danger">
+          <div *ngIf="country.errors.required">
+            Country is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        Date of birth
+        <input type="date" [(ngModel)]="tourist.dateOfBirth" required max="{{today | date:'yyyy-MM-dd'}}"
+               name="dateOfBirth" class="form-control" #dateOfBirth="ngModel">
+        <div *ngIf="dateOfBirth.invalid && (dateOfBirth.dirty || dateOfBirth.touched)"
+             class="alert alert-danger">
+          <div *ngIf="dateOfBirth.errors.required">
+            Date of birth is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        Notes
+        <textarea type="text" [(ngModel)]="tourist.notes" name="country" class="form-control"></textarea>
+      </div>
+        <div *ngIf="isCreated; else buttonEdit" class="form-group">
+          <button type="submit" [disabled]="touristForm.invalid" class="btn btn-success btn-lg btn-block" (click)="createTourist()">Create</button>
+        </div>
+      <ng-template #buttonEdit>
+      <div class="form-group">
+        <button class="btn btn-success btn-lg btn-block" (click)="editTourist()">Edit</button>
+      </div>
+      </ng-template>
+  </form>
   </div>
 </div>

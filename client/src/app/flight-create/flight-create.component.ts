@@ -15,6 +15,7 @@ export class FlightCreateComponent implements OnInit {
     ticketPrice: ''
   };
   @Input() isCreated = true;
+  @Input() today = new Date().toISOString();
   constructor(public flightService: FlightService, public router: Router) { }
 
   ngOnInit() {

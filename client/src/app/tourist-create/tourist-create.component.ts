@@ -17,6 +17,7 @@ export class TouristCreateComponent implements OnInit {
     notes: ''
   };
   @Input() isCreated = true;
+  @Input() today = new Date().toISOString();
 
   constructor(public touristService: TouristService, public router: Router) { }
 

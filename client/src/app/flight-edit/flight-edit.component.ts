@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class FlightEditComponent implements OnInit {
   @Input() isCreated = false;
+  @Input() today = new Date().toISOString();
   id = this.actRoute.snapshot.params['id'];
   flight: any = {};
 

@@ -9,6 +9,7 @@ import {TouristService} from "../services/tourist.service";
 })
 export class TouristEditComponent implements OnInit {
   @Input() isCreated = false;
+  @Input() today = new Date().toISOString();
   id = this.actRoute.snapshot.params['id'];
   tourist: any = {};
 

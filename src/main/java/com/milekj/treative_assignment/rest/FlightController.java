@@ -9,9 +9,11 @@ import com.milekj.treative_assignment.service.FlightService;
 import com.milekj.treative_assignment.service.TouristService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -51,7 +53,9 @@ public class FlightController {
     }
 
     @PostMapping("")
-    public FlightResponseDto create(@RequestBody FlightRequestDto flightRequestDto) {
+    public FlightResponseDto create(@RequestBody @Valid FlightRequestDto flightRequestDto, BindingResult result) {
+        if (result.hasErrors())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         return flightService.create(flightRequestDto);
     }
 
@@ -65,7 +69,11 @@ public class FlightController {
     }
 
     @PutMapping("{id}")
-    public void updateById(@PathVariable long id, @RequestBody FlightRequestDto flightRequestDto) {
+    public void updateById(@PathVariable long id,
+                           @RequestBody @Valid FlightRequestDto flightRequestDto,
+                           BindingResult result) {
+        if (result.hasErrors())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         try {
             flightService.update(id, flightRequestDto);
         } catch (ResourceNotFoundException e) {

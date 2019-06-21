@@ -8,6 +8,7 @@ import com.milekj.treative_assignment.service.FlightService;
 import com.milekj.treative_assignment.service.TouristService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -51,7 +52,9 @@ public class TouristController {
     }
 
     @PostMapping("")
-    public TouristResponseDto create(@RequestBody @Valid TouristRequestDto touristRequestDto) {
+    public TouristResponseDto create(@RequestBody @Valid TouristRequestDto touristRequestDto, BindingResult result) {
+        if (result.hasErrors())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         return touristService.create(touristRequestDto);
     }
 
@@ -65,7 +68,11 @@ public class TouristController {
     }
 
     @PutMapping("{id}")
-    public void updateById(@PathVariable long id, @RequestBody TouristRequestDto touristRequestDto) {
+    public void updateById(@PathVariable long id,
+                           @RequestBody @Valid TouristRequestDto touristRequestDto,
+                           BindingResult result) {
+        if (result.hasErrors())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         try {
             touristService.update(id, touristRequestDto);
         } catch (ResourceNotFoundException e) {

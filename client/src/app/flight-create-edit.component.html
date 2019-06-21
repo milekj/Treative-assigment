@@ -8,29 +8,59 @@
         <span >Edit flight</span>
       </ng-template>
     </h3>
-    <div class="form-group">
-      Departure date and time
-      <input type="datetime-local" [(ngModel)]="flight.departureDateTime" class="form-control" placeholder="Departure time">
-    </div>
-    <div class="form-group">
-      Arrival date and time
-      <input type="datetime-local" [(ngModel)]="flight.arrivalDateTime" class="form-control" placeholder="Arrival time">
-    </div>
-    <div class="form-group">
-      Ticket price
-      <input type="number" [(ngModel)]="flight.ticketPrice" class="form-control" placeholder="Ticket price">
-    </div>
-    <div class="form-group">
-      Places number
-      <input type="number" [(ngModel)]="flight.placesNumber" class="form-control" placeholder="Places number">
-    </div>
-      <div *ngIf="isCreated; else buttonEdit" class="form-group">
-        <button class="btn btn-success btn-lg btn-block" (click)="createFlight()">Create</button>
+    <form #flightForm="ngForm">
+      <div class="form-group">
+        Departure date and time
+        <input type="datetime-local" required min="{{today | date:'yyyy-MM-dd'}}" name="departureDateTime"
+               [(ngModel)]="flight.departureDateTime" class="form-control"
+               placeholder="Departure time" #departureDateTime="ngModel">
+        <div *ngIf="departureDateTime.invalid && (departureDateTime.dirty || departureDateTime.touched)"
+             class="alert alert-danger">
+          <div *ngIf="departureDateTime.errors.required">
+            Arrival date and time is required.
+          </div>
+        </div>
       </div>
-    <ng-template #buttonEdit>
-    <div class="form-group">
-      <button class="btn btn-success btn-lg btn-block" (click)="editFlight()">Edit</button>
-    </div>
-    </ng-template>
+      <div class="form-group">
+        Arrival date and time
+        <input type="datetime-local" required min="{{today | date:'yyyy-MM-dd'}}" name="arrivalDateTime"
+               [(ngModel)]="flight.arrivalDateTime" class="form-control"
+               placeholder="Arrival time" #arrivalDateTime="ngModel">
+        <div *ngIf="arrivalDateTime.invalid && (arrivalDateTime.dirty || arrivalDateTime.touched)"
+             class="alert alert-danger">
+          <div *ngIf="arrivalDateTime.errors.required">
+            Arrival date and time is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        Ticket price
+        <input type="number" [(ngModel)]="flight.ticketPrice" required class="form-control"
+               name="ticketPrice" placeholder="Ticket price" #ticketPrice="ngModel">
+        <div *ngIf="ticketPrice.invalid && (ticketPrice.dirty || ticketPrice.touched)" class="alert alert-danger">
+          <div *ngIf="ticketPrice.errors.required">
+            Ticket price is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        Places number
+        <input type="number" [(ngModel)]="flight.placesNumber" required class="form-control" name="placesNumber"
+               placeholder="Places number" #placesNumber="ngModel">
+        <div *ngIf="placesNumber.invalid && (placesNumber.dirty || placesNumber.touched)" class="alert alert-danger">
+          <div *ngIf="placesNumber.errors.required">
+            Places number is required.
+          </div>
+        </div>
+      </div>
+        <div *ngIf="isCreated; else buttonEdit" class="form-group">
+          <button [disabled]="flightForm.invalid" class="btn btn-success btn-lg btn-block" (click)="createFlight()">Create</button>
+        </div>
+      <ng-template #buttonEdit>
+      <div class="form-group">
+        <button [disabled]="flightForm.invalid" class="btn btn-success btn-lg btn-block" (click)="editFlight()">Edit</button>
+      </div>
+      </ng-template>
+    </form>
   </div>
 </div>
