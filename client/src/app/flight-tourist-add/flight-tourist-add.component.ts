@@ -23,17 +23,15 @@ export class FlightTouristAddComponent implements OnInit {
 
   loadTourists() {
     return this.touristService.getAll()
-      .subscribe((data: {}) => {
-        this.Tourists = data;
-      })
+      .subscribe((data: {}) => {this.Tourists = data;},
+        error => alert("Could not load tourists. The flight or the tourist does not exist."))
   }
 
   addFlightTourist(touristId) {
     this.flightService.addToTourist(this.id, touristId)
-      .subscribe((data: {}) => {
-        console.log(data);
-        this.router.navigate([`/flight-tourists/${this.id}`]);
-      })
+      .subscribe((data: {}) => {this.router.navigate([`/flight-tourists/${this.id}`]);},
+        error => alert("Could not add flight. " +
+          "Possibly there is not enough places or the tourist is already added"))
   }
 
 }

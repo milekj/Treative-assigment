@@ -26,9 +26,10 @@ export class TouristEditComponent implements OnInit {
   }
 
   editTourist() {
-    this.touristService.update(this.id, this.tourist).subscribe((data: {}) => {
-      this.router.navigate(['/tourists'])
-    })
+    this.touristService.update(this.id, this.tourist)
+      .subscribe(
+        (data: {}) => {this.router.navigate(['/tourists'])},
+        error => alert("Could not save. Please check if information you provided is correct."))
   }
 
 }

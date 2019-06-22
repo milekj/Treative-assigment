@@ -23,9 +23,8 @@ export class FlightTouristsListComponent implements OnInit {
 
   loadFlightTourists() {
     return this.flightService.getTourists(this.id)
-      .subscribe((data: {}) => {
-        this.Tourists = data;
-      })
+      .subscribe((data: {}) => {this.Tourists = data;},
+        error => alert("Could not load tourists. The flight probably does not exist."))
   }
 
   deleteFlightTourist(touristId) {
