@@ -21,9 +21,10 @@ export class FlightCreateComponent implements OnInit {
   ngOnInit() {
   }
   createFlight() {
-    this.flightService.create(this.flight).subscribe((data: {}) => {
-      this.router.navigate(['/flights'])
-    })
+    this.flightService.create(this.flight)
+      .subscribe(
+        (data: {}) => {this.router.navigate(['/flights'])},
+        error => alert("Could not create a flight. Please check if information you provided is correct."))
   }
 
 }

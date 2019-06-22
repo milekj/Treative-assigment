@@ -21,7 +21,8 @@ const routes: Routes = [
   {path: 'tourist-flights/:id', component: TouristFlightsListComponent},
   {path: 'add-tourist-flight/:id', component: TouristFlightAddComponent},
   {path: 'flight-tourists/:id', component: FlightTouristsListComponent},
-  {path: 'add-flight-tourist/:id', component: FlightTouristAddComponent}
+  {path: 'add-flight-tourist/:id', component: FlightTouristAddComponent},
+  {path: '**', redirectTo: '/flights', pathMatch: 'full'}
 ];
 
 @NgModule({

@@ -16,17 +16,20 @@ export class FlightEditComponent implements OnInit {
   constructor(public flightService: FlightService, public actRoute: ActivatedRoute, public router: Router) { }
 
   ngOnInit() {
-     this.flightService.getById(this.id).subscribe((data: {}) => {
-       delete data['id'];
-       delete data['touristsIds'];
-       this.flight = data
-     })
+     this.flightService.getById(this.id)
+       .subscribe(
+         (data: {}) => {
+           delete data['id'];
+           delete data['touristsIds'];
+           this.flight = data
+     },
+         error => alert("Could not load the tourist. They probably do not exists."))
   }
 
   editFlight() {
-    this.flightService.update(this.id, this.flight).subscribe((data: {}) => {
-      this.router.navigate(['/flights'])
-    })
+    this.flightService.update(this.id, this.flight)
+      .subscribe((data: {}) => {this.router.navigate(['/flights'])},
+        error => alert("Could not save. Please check if information you provided is correct."))
   }
 
 }

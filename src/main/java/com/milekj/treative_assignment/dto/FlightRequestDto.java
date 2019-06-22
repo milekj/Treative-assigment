@@ -1,5 +1,6 @@
 package com.milekj.treative_assignment.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.milekj.treative_assignment.entity.Flight;
 
 import javax.validation.constraints.*;
@@ -16,6 +17,7 @@ public class FlightRequestDto {
     protected LocalDateTime arrivalDateTime;
 
     @AssertTrue
+    @JsonIgnore
     private boolean datesValid;
 
     @Min(1)
@@ -36,19 +38,45 @@ public class FlightRequestDto {
         return departureDateTime;
     }
 
+    public void setDepartureDateTime(LocalDateTime departureDateTime) {
+        this.departureDateTime = departureDateTime;
+        refreshDatesValid();
+    }
+
     public LocalDateTime getArrivalDateTime() {
         return arrivalDateTime;
+    }
+
+    public void setArrivalDateTime(LocalDateTime arrivalDateTime) {
+        System.out.println(arrivalDateTime);
+        this.arrivalDateTime = arrivalDateTime;
+        refreshDatesValid();
+        System.out.println(arrivalDateTime);
     }
 
     public int getPlacesNumber() {
         return placesNumber;
     }
 
+    public void setPlacesNumber(int placesNumber) {
+        this.placesNumber = placesNumber;
+    }
+
     public BigDecimal getTicketPrice() {
         return ticketPrice;
     }
 
+    public void setTicketPrice(BigDecimal ticketPrice) {
+        this.ticketPrice = ticketPrice;
+    }
+
+    public boolean isDatesValid() {
+        return datesValid;
+    }
+
     private void refreshDatesValid() {
-        datesValid = (departureDateTime != null && departureDateTime.isBefore(arrivalDateTime));
+        datesValid = departureDateTime != null &&
+                arrivalDateTime != null &&
+                departureDateTime.isBefore(arrivalDateTime);
     }
 }

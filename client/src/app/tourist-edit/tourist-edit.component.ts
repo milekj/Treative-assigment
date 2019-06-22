@@ -16,11 +16,13 @@ export class TouristEditComponent implements OnInit {
   constructor(public touristService: TouristService, public actRoute: ActivatedRoute, public router: Router) { }
 
   ngOnInit() {
-    this.touristService.getById(this.id).subscribe((data: {}) => {
-      delete data['id'];
-      delete data['flightsIds'];
-      this.tourist = data
-    })
+    this.touristService.getById(this.id)
+      .subscribe(
+        (data: {}) => {
+          delete data['id'];
+          delete data['flightsIds'];
+          this.tourist = data
+    }, error => alert("Could not load the tourist. Probably they do not exists."))
   }
 
   editTourist() {

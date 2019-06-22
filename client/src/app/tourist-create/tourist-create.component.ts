@@ -26,9 +26,10 @@ export class TouristCreateComponent implements OnInit {
 
   createTourist() {
     console.log(this.tourist);
-    this.touristService.create(this.tourist).subscribe((data: {}) => {
-      this.router.navigate(['/tourists'])
-    })
+    this.touristService.create(this.tourist)
+      .subscribe(
+        (data: {}) => {this.router.navigate(['/tourists'])},
+        error => alert("Coulnd not create a tourist. Please check if information you provided is correct."))
   }
 
 }
